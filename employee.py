@@ -8,9 +8,19 @@ d,c,f,e="ameer","ceo",23000,1
 
 
 class update_emp():
-    def rename_emp(EID):
-        a.execute('update employee set ENAME = %s where EID = %s',(d,e))
+    def name(EID,NAME):
+        a.execute('update employee set ENAME = %s where EID = %s',(NAME,EID))
         db.commit()
+    def department(EID,DEPT):
+        a.execute('update employee set DEPARTMENT = %s where EID = %s',(DEPT,EID))
+        db.commit()
+    def salary(EID,SALARY):
+        a.execute('update employee set salary = %s where EID = %s',(SALARY,EID))
+        db.commit()
+    def EID(EID):
+        a.execute('update employee set EID = %s where EID = %s',(EID,1))
+        db.commit()
+        
 
 def add_emp(d,c,f):
     a.execute("insert into employee(ENAME,DEPARTMENT,salary) values(%s,%s,%s)",(d,c,f))
@@ -19,3 +29,4 @@ def add_emp(d,c,f):
 def del_emp(EID):
     a.execute("delete from employee where EID = (%s)",(EID,))
     db.commit()
+update_emp.EID(5)
