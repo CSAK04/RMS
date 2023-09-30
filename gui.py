@@ -26,13 +26,16 @@ home_icon = ImageTk.PhotoImage(home)
 
 
 
-sideBarLeft = Frame(a,bg = "black",width = 500,height = 300)
+sideBarLeft = Frame(a,bg = "black")
 sideBarRight = Frame(a,bg = "red")
 upperBar = Frame(a,bg = "yellow")
 
-home_btn = Button(upperBar,image = home_icon)
-sideBarLeft.place(anchor = W)
-upperBar.place(anchor = N)
+sideBarLeft.place(relx=0,rely=0.11,relwidth = 0.225,relheight = 1)
+upperBar.place(relx=0,rely=0,relwidth = 2,relheight = 0.11)
+sideBarRight.place(relx=0.9,rely=0.11,relwidth=1,relheight=1)
+
+home_btn = Button(a,image = home_icon)
+home_btn.pack()
 
 '''m = Menu(a)
 f = Menu(m,tearoff = 0)
