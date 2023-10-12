@@ -38,3 +38,7 @@ def add_emp(d,c,f):
 def del_emp(EID):
     a.execute("delete from employee where EID = (%s)",(EID,))
     db.commit()
+
+def emp_details(EID):
+    a.execute("select* from employee where EID = (%s)",(EID,))
+    print(a.fetchall())
