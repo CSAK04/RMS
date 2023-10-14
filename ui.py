@@ -13,10 +13,13 @@ def login_btn(user):
         
     if user == 'manager':
             MainLabel.configure(text = "Enter Login credentials")
-            id_entry = customtkinter.CTkEntry(a,placeholder_text='Enter your id',height=40,width=300)
-            pass_entry = customtkinter.CTkEntry(a,placeholder_text='Enter your id',height=40,width=300)
+            id_entry = customtkinter.CTkEntry(a,placeholder_text='Enter your id',height=50,width=300)
+            pass_entry = customtkinter.CTkEntry(a,placeholder_text='Enter your password',height=50,width=300)
+            submit_btn = customtkinter.CTkButton(a,text='SUBMIT',height=50,font = ('halvatica',20))
             
             id_entry.place(relx = 0.5,rely = 0.4,anchor = 'center')
+            pass_entry.place(relx = 0.5,rely = 0.52,anchor = 'center')
+            submit_btn.place(relx = 0.5,rely = 0.7,anchor = 'center')
 
 
 def login():
@@ -54,7 +57,9 @@ a = customtkinter.CTk()
 #code to insert title
 a.title('RESTAURANT MANAGEMENT SYSTEM')
 #code to insert icon
-a.iconbitmap('images/logo.ico')
+'''icon_img = PhotoImage(file="images/heart.png")
+a.iconphoto(True,icon_img)'''
+a.iconbitmap('images/logo2.ico')
 #code to give size of the form
 a.geometry('1000x600')
 a.minsize(900,600)
