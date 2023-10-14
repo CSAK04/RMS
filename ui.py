@@ -23,11 +23,11 @@ def login():
                                             #,hover_color='#ba2000',fg_color = '#fa7954'
                                             ,text_color='#ffffff',compound='top')
     
-    MainLabel = customtkinter.CTkLabel(a,text="Welcome to Restaurant Management System")
+    MainLabel = customtkinter.CTkLabel(a,text="Welcome to Restaurant Management System",)
     
-    Manager_btn.place(relx = 0.3,rely = 0.4)
-    Employee_btn.place(relx = 0.6,rely = 0.4)
-    MainLabel.place(rely = 0.2,)
+    Manager_btn.place(relx = 0.3,rely = 0.5)
+    Employee_btn.place(relx = 0.6,rely = 0.5)
+    MainLabel.place(rely = 0.2,relx = 0.3)
     
     
 a = customtkinter.CTk()
