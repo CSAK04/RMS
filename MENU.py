@@ -7,14 +7,14 @@ db = mysql.connector.connect(host = 'localhost', user='root',\
 cursor = db.cursor()
 
 #DATABASE CREATION
-'''cursor.execute('create database test')'''
-cursor.execute('use test')
+'''cursor.execute('create database rms')'''
+cursor.execute('use rms')
 
 #TABLE CREATION
 '''cursor.execute('create table MENU(MCODE int(3) primary key,ITEM varchar(50),\
-COURSE varchar(20),VEG varchar(3),PRICE int(5),\
-CONSTRAINT CHECK_VEG CHECK (VEG = "YES" OR VEG = "NO"))')
-'''
+                COURSE varchar(20),VEG varchar(3),PRICE int(5),\
+                CONSTRAINT CHECK_VEG CHECK (VEG = "YES" OR VEG = "NO"))')'''
+
 #INSERTING VALUES TO MENU TABLE
 '''cursor.execute("insert into menu values (101,'BUFFALO CHICKEN MEATBALLS','APPETIZER','NO',199),\
 (102,'JALAPENO POPPERS','APPETIZER','YES',189),\
@@ -30,7 +30,7 @@ CONSTRAINT CHECK_VEG CHECK (VEG = "YES" OR VEG = "NO"))')
 (402,'CINNAMON TEA','BEVERAGE','YES',79),(403,'COFFEE','BEVERAGE','YES',99)")
 db.commit()'''
 
-
+#Add to Menu
 def add_item(ITEM,COURSE,VEG,PRICE):
     courses = ['APPETIZER','MAIN','DESSERT','BEVERAGE']
     for i in range(len(courses)):
@@ -43,10 +43,12 @@ def add_item(ITEM,COURSE,VEG,PRICE):
     cursor.execute('insert into menu values(%s,%s,%s,%s,%s)',(MCODE,ITEM,COURSE,VEG,PRICE))
     db.commit()
 
+#Remove from Menu
 def remove_item(MCODE):
     cursor.execute('delete from menu where MCODE = %s',(MCODE,))
     db.commit()
 
+#Update Menu
 def update_item(MCODE,FIELD_NAME):
     if FIELD_NAME == 'ITEM':
         ITEM = input('Enter the corrected item name:')
