@@ -9,15 +9,37 @@ customtkinter.set_appearance_mode('dark')
 customtkinter.set_default_color_theme('green')
 
 
+def emp_submitbtn():
+    MainLabel.place_forget()
+    SecondaryLabel.place_forget()
+    Name_entry.place_forget()
+    Dept_entry.place_forget()
+    Salary_entry.place_forget()
+    submit_btn.place_forget()
+    
+    emp_name = Name_entry.get()
+    emp_dept = Dept_entry.get()
+    emp_sal = Salary_entry.get()
+    
+    e.add_emp(emp_name,emp_dept,emp_sal)
+    
+    MANAGER_EMP()
+
 def add_employee():
     Add_Employee_btn.place_forget()
     Dismiss_Employee_btn.place_forget()
     Info_Employee_btn.place_forget()
     
-    Name_entry.place(relx = 0.5,rely = 0.4,anchor = 'center')
-    Dept_entry.place(relx = 0.5,rely = 0.5,anchor = 'center')
-    Salary_entry.place(relx =0.5,rely = 0.6,anchor = 'center')
-    return
+    MainLabel.configure(text='EMPLOYEE RECRUITMENT')
+    SecondaryLabel.configure(text = 'ENTER EMPLOYEE DETAILS')
+    submit_btn.configure(command= lambda:emp_submitbtn())
+    
+    MainLabel.place(relx = 0.5,rely = 0.2,anchor = 'center')
+    SecondaryLabel.place(relx = 0.5,rely = 0.3,anchor = 'center')
+    Name_entry.place(relx = 0.5,rely = 0.45,anchor = 'center')
+    Dept_entry.place(relx = 0.5,rely = 0.58,anchor = 'center')
+    Salary_entry.place(relx =0.5,rely = 0.71,anchor = 'center')
+    submit_btn.place(relx = 0.5,rely=0.85 ,anchor='center')
 
 def MANAGER_EMP():
     Menu_btn.place_forget()
@@ -25,9 +47,12 @@ def MANAGER_EMP():
     Order_history_btn.place_forget()
     LogOut_btn.place_forget()
     
+    Left_arrow_btn.configure(command=lambda:MANAGER())
+    
     Add_Employee_btn.place(relx= 0.35,rely= 0.3, anchor= 'center')
     Dismiss_Employee_btn.place(relx = 0.65,rely = 0.3,anchor = 'center')
     Info_Employee_btn.place(relx= 0.35,rely= 0.725, anchor= 'center')
+    Left_arrow_btn.place(relx=0.025,rely=0.03)
     return
 
 def History():
@@ -42,6 +67,10 @@ def MANAGER():
     MainLabel.place_forget()
     Left_arrow_btn.place_forget()
     submit_btn.place_forget()
+    Add_Employee_btn.place_forget()
+    Dismiss_Employee_btn.place_forget()
+    Info_Employee_btn.place_forget()
+    Left_arrow_btn.place_forget()
     
     Salesman_btn.configure(command = lambda:MANAGER_EMP())
     LogOut_btn.configure(command= lambda:login())
@@ -225,5 +254,6 @@ submit_btn = customtkinter.CTkButton(a,text='SUBMIT',height=50,font = ('halvatic
                                      command=lambda:submitbtn())
             
 #login()
-MANAGER()
+#MANAGER()
+add_employee()
 a.mainloop()
