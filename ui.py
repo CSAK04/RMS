@@ -9,7 +9,7 @@ customtkinter.set_appearance_mode('dark')
 customtkinter.set_default_color_theme('green')
 
 
-def emp_submitbtn():
+def add_emp_submitbtn():
     MainLabel.place_forget()
     SecondaryLabel.place_forget()
     Name_entry.place_forget()
@@ -22,30 +22,79 @@ def emp_submitbtn():
     emp_sal = Salary_entry.get()
     
     e.add_emp(emp_name,emp_dept,emp_sal)
-    
     MANAGER_EMP()
 
 def add_employee():
     Add_Employee_btn.place_forget()
     Dismiss_Employee_btn.place_forget()
     Info_Employee_btn.place_forget()
+    Name_entry.delete(0,END)
+    Dept_entry.delete(0,END)
+    Salary_entry.delete(0,END)
     
     MainLabel.configure(text='EMPLOYEE RECRUITMENT')
     SecondaryLabel.configure(text = 'ENTER EMPLOYEE DETAILS')
-    submit_btn.configure(command= lambda:emp_submitbtn())
+    submit_btn.configure(command= lambda:add_emp_submitbtn())
+    Left_arrow_btn.configure(command=lambda:MANAGER_EMP())
+    Name_entry.configure(placeholder_text="ENTER EMPLOYEE NAME")
+    Dept_entry.configure(placeholder_text="ENTER EMPLOYEE DEPARTMENT")
+    Salary_entry.configure(placeholder_text="ENTER EMPLOYEE SALARY")
     
     MainLabel.place(relx = 0.5,rely = 0.2,anchor = 'center')
     SecondaryLabel.place(relx = 0.5,rely = 0.3,anchor = 'center')
     Name_entry.place(relx = 0.5,rely = 0.45,anchor = 'center')
     Dept_entry.place(relx = 0.5,rely = 0.58,anchor = 'center')
     Salary_entry.place(relx =0.5,rely = 0.71,anchor = 'center')
+    Left_arrow_btn.place(relx=0.025,rely=0.03)
     submit_btn.place(relx = 0.5,rely=0.85 ,anchor='center')
+    
+    a.bind('<Return>',lambda event:add_emp_submitbtn())
+
+def dismiss_emp_submitbtn():
+    EID = EID_entry.get()
+    print(EID)
+    MainLabel.place_forget()
+    SecondaryLabel.place_forget()
+    EID_entry.place_forget()
+    submit_btn.place_forget()
+    
+    e.del_emp(EID)
+    MANAGER_EMP()
+
+def dismiss_employee():
+    Add_Employee_btn.place_forget()
+    Dismiss_Employee_btn.place_forget()
+    Info_Employee_btn.place_forget()
+    Left_arrow_btn.place_forget()
+    EID_entry.delete(0,END)
+    
+    MainLabel.configure(text='EMPLOYEE DISMISSAL')
+    SecondaryLabel.configure(text = 'ENTER EMPLOYEE ID TO DISMISS')
+    EID_entry.configure(placeholder_text= 'ENTER EID')
+    submit_btn.configure(command= lambda:dismiss_emp_submitbtn())
+    Left_arrow_btn.configure(command=lambda:MANAGER_EMP())
+    
+    MainLabel.place(relx = 0.5,rely = 0.2,anchor = 'center')
+    SecondaryLabel.place(relx = 0.5,rely = 0.3,anchor = 'center')
+    Left_arrow_btn.place(relx=0.025,rely=0.03)
+    submit_btn.place(relx = 0.5,rely=0.85 ,anchor='center')
+    EID_entry.place(relx= 0.5, rely= 0.5,anchor= 'center')
+    
+    a.bind('<Return>',lambda event:dismiss_emp_submitbtn())
 
 def MANAGER_EMP():
     Menu_btn.place_forget()
     Salesman_btn.place_forget()
     Order_history_btn.place_forget()
     LogOut_btn.place_forget()
+    MainLabel.place_forget()
+    SecondaryLabel.place_forget()
+    Name_entry.place_forget()
+    Dept_entry.place_forget()
+    Salary_entry.place_forget()
+    EID_entry.place_forget()
+    Left_arrow_btn.place_forget()
+    submit_btn.place_forget()
     
     Left_arrow_btn.configure(command=lambda:MANAGER())
     
@@ -219,10 +268,11 @@ Order_history_btn = customtkinter.CTkButton(a,image = Order_history_icon,text = 
 LogOut_btn = customtkinter.CTkButton(a,image=LogOut_icon,text='Log Out',compound='top',height= 170,width= 150,
                                    command = None)
 
-Add_Employee_btn = customtkinter.CTkButton(a,image=Add_Employee_icon,text='ADD EMPLOYEE',compound='top',
+Add_Employee_btn = customtkinter.CTkButton(a,image=Add_Employee_icon,text='RECRUIT EMPLOYEE',compound='top',
                                            height= 170,width= 150,command = lambda:add_employee())
 Dismiss_Employee_btn = customtkinter.CTkButton(a,image=Dismiss_Employee_icon,text='DISMISS EMPLOYEE',
-                                               compound='top',height= 170,width= 150,command = None)
+                                               compound='top',height= 170,width= 150,
+                                               command = lambda:dismiss_employee())
 Info_Employee_btn = customtkinter.CTkButton(a,image= Info_Employee_icon,text='EMPLOYEE INFO',compound='top',
                                             height= 170,width= 150,command = None)
 
@@ -248,6 +298,9 @@ Dept_entry = customtkinter.CTkEntry(a,placeholder_text="ENTER EMPLOYEE DEPARTMEN
                                   font=('halvatica',16),width=300)
 
 Salary_entry = customtkinter.CTkEntry(a,placeholder_text="ENTER EMPLOYEE SALARY",height=50,
+                                  font=('halvatica',16),width=300)
+
+EID_entry = customtkinter.CTkEntry(a,placeholder_text='EID',height=50,
                                   font=('halvatica',16),width=300)
 
 submit_btn = customtkinter.CTkButton(a,text='SUBMIT',height=50,font = ('halvatica',16,'bold'),
