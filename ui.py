@@ -116,6 +116,25 @@ def MANAGER_EMP():
 def History():
     return
 
+def TABLE():
+    global tablelist
+    tablelist = list()
+    r = -1
+    mainFrame = customtkinter.CTkScrollableFrame(a,width=984,height=440,corner_radius=0,fg_color='transparent')
+    secondaryFrame = customtkinter.CTkFrame(master= mainFrame,width= 974,fg_color='transparent',height=230)
+    
+    mainFrame.place(relx= 0,rely=0.1)
+    secondaryFrame.grid(pady= (20,0))
+    
+    for i in range(10):
+        if i % 3 == 0:
+            r += 1
+            frame = customtkinter.CTkFrame(secondaryFrame)
+            frame.grid(column=0,row=r,ipadx = 70)
+        table_btn = customtkinter.CTkButton(frame,text=str(i+1),height=170,width=150)
+        table_btn.grid(column= i%3,row= r,padx = 30,pady= 30)
+        tablelist.append(table_btn)
+    
 def course():
     global mainFrame
     def itemincrement(index):
@@ -330,7 +349,7 @@ def login():
     
     MainLabel.configure(text="Welcome to Restaurant Management System")
     Manager_btn.configure(command= lambda:login_btn())
-    Salesman_btn.configure(command= lambda:course())
+    Salesman_btn.configure(command= lambda:TABLE())
     
     Manager_btn.place(relx = 0.35,rely = 0.6,anchor = 'center')
     Salesman_btn.place(relx = 0.65,rely = 0.6,anchor = 'center')
