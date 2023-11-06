@@ -190,6 +190,8 @@ def course():
     for i in range(len(list_of_items)):
         
         try:
+            if i % 3 == 0:
+                frame
             menu_frame = customtkinter.CTkFrame(secondaryFrame)
             
             name=list_of_items[i][1]
