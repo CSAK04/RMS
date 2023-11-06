@@ -48,6 +48,14 @@ def remove_item(MCODE):
     cursor.execute('delete from menu where MCODE = %s',(MCODE,))
     db.commit()
 
+#View Menu
+def view_items():
+    cursor.execute('select * FROM MENU')
+    for tuple in cursor:
+        for item in tuple:
+            print(item,end=' ')
+        print()
+        
 #Update Menu
 def update_item(MCODE,FIELD_NAME):
     if FIELD_NAME == 'ITEM':

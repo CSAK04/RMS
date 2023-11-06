@@ -53,4 +53,3 @@ def emp_details(EID):
     cursor.execute("select* from employee where EID = (%s)",(EID,))
     print(cursor.fetchall())
 
-emp_details(1)

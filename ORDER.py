@@ -37,7 +37,7 @@ def cancel_order(ORDER_NUMBER):
 
 #To view all orders of a table
 def view_order_details(TABLE_NUMBER):
-    cursor.execute('SELECT ITEM,COURSE,PRICE,STATE FROM ORDERS O,MENU M WHERE TABLE_NO = %s AND\
+    cursor.execute('SELECT ORDER_NO,ITEM,COURSE,PRICE,STATE FROM ORDERS O,MENU M WHERE TABLE_NO = %s AND\
                     O.MCODE = M.MCODE',(TABLE_NUMBER,))
     for tuple in cursor:
         for item in tuple:
