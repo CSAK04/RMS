@@ -1,12 +1,5 @@
 import mysql.connector 
 
-db = mysql.connector.connect(host = 'localhost', user='root',database='rms',\
-                             passwd='1234',auth_plugin = 'mysql_native_password')
-
-cursor = db.cursor()
-d,c,f,e="ameer","ceo",23000,1
-
-
 class update_emp():
     #To update Name of an Employee
     def name(EID,NAME):
@@ -14,7 +7,7 @@ class update_emp():
         db.commit()
     #To Change Department of an Employee
     def department(EID,DEPT):
-        cursor.execute('update employee set DEPARTMENT = %s where EID = %s',(DEPT,EID))
+        cursor.execute('update employee set DEPT = %s where EID = %s',(DEPT,EID))
         db.commit()
     #To change salary of an employee
     def salary(EID,SALARY):
@@ -42,7 +35,7 @@ def add_emp(NAME,DEPT,sal):
         if ID not in listOfEid:
             EID = ID
             break
-    cursor.execute("insert into employee(EID,ENAME,USER,salary) values(%s,%s,%s,%s)",(EID,NAME,DEPT,sal))
+    cursor.execute("insert into employee(EID,ENAME,DEPT,salary) values(%s,%s,%s,%s)",(EID,NAME,DEPT,sal))
     db.commit()
 
 def del_emp(EID):
