@@ -1,5 +1,4 @@
 import mysql.connector 
-import MAIN
 
 db = mysql.connector.connect(host = 'localhost',user='root',passwd='1234',auth_plugin='mysql_native_password')
 cursor = db.cursor(buffered=True)
