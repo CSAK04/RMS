@@ -1,9 +1,10 @@
 import mysql.connector 
 import MAIN
 
-#DATABASE CREATION
-cursor = MAIN.db.cursor()
+db = mysql.connector.connect(host = 'localhost',user='root',passwd='1234',auth_plugin='mysql_native_password')
+cursor = db.cursor(buffered=True)
 
+cursor.execute('use rms')
 #TABLE CREATION
 cursor.execute('create table IF NOT EXISTS MENU(MCODE int(3) primary key,ITEM varchar(50),\
                 COURSE varchar(20),VEG varchar(3),PRICE int(5),\
@@ -23,7 +24,6 @@ try:
     (303,'BAKLAVA','DESSERT','YES',249),(304,'GULAB JAMUN','DESSERT','YES',199),\
     (305,'CHURROS','DESSERT','YES',299),(401,'MOJITO','BEVERAGE','YES',99),\
     (402,'CINNAMON TEA','BEVERAGE','YES',79),(403,'COFFEE','BEVERAGE','YES',99)")
-    db.commit()
 except:
     pass
 
@@ -38,12 +38,10 @@ def add_item(ITEM,COURSE,VEG,PRICE):
     l = list(cursor)
     MCODE = i*100+len(l)+1
     cursor.execute('insert into menu values(%s,%s,%s,%s,%s)',(MCODE,ITEM,COURSE,VEG,PRICE))
-    db.commit()
 
 #Remove from Menu
 def remove_item(MCODE):
     cursor.execute('delete from menu where MCODE = %s',(MCODE,))
-    db.commit()
 
 #View Menu
 def view_items():
@@ -58,11 +56,8 @@ def update_item(MCODE,FIELD_NAME):
     if FIELD_NAME == 'ITEM':
         ITEM = input('Enter the corrected item name:')
         cursor.execute('update menu set ITEM = %s where MCODE = %s',(ITEM,MCODE))
-        db.commit()
 
     elif FIELD_NAME == 'COURSE':
         course = input('Enter the corrected course:')
         cursor.execute('update menu set COURSE = %s where MCODE = %s',(course,MCODE))
-        db.commit()
         
-cursor.close()

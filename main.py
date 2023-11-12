@@ -30,7 +30,7 @@ def login():
         return 'Invalid Id'
     
 db = mysql.connector.connect(host = 'localhost', user='root',passwd='1234',auth_plugin = 'mysql_native_password')
-cursor = db.cursor()        
+cursor = db.cursor(buffered= True)
 
 #DATABASE CREATION
 cursor.execute('create DATABASE IF NOT EXISTS rms')
@@ -41,7 +41,9 @@ cursor.execute('create table IF NOT EXISTS ORDERS(ORDER_NO int primary key,TABLE
                             MCODE int(3),ORDER_STATE varchar(12) default "PREPARING",\
                             foreign key(MCODE) references MENU(MCODE))')
 
-
+cursor.execute('create table IF NOT EXISTS MENU(MCODE int(3) primary key,ITEM varchar(50),\
+                COURSE varchar(20),VEG varchar(3),PRICE int(5),\
+                CONSTRAINT CHECK_VEG CHECK (VEG = "YES" OR VEG = "NO"))')
 
 def order():
     table_number = input("Enter Table Number:")
@@ -70,15 +72,17 @@ def order():
 
 def verification():
     state = login()
+    
     if state == 'Logged In':
-        cursor.execute('select EID,ENAME,DEPT from employee WHERE EID = %s',(str(id),))
+        cursor.execute('select EID,ENAME,DEPT from employee')
         for i in cursor:
-            print('WELCOME ',i[1])
             if i[2] == 'WAITER':
+                print('\nWELCOME ',i[1],'\n')
                 order()
+                
     elif state == 'Incorrect Password':
-        print('Incorrect Password')
         verification()
+        
     elif state == 'Invalid Id':
         print("An user with this ID doesn't exist\nPlease Try again later")
         verification()
