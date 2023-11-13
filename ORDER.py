@@ -23,7 +23,10 @@ def cancel_order(ORDER_NUMBER):
 def view_order_details(TABLE_NUMBER):
     cursor.execute('SELECT ORDER_NO,ITEM,COURSE,PRICE,STATE FROM ORDERS O,MENU M WHERE TABLE_NO = %s AND\
                     O.MCODE = M.MCODE',(TABLE_NUMBER,))
-    for tuple in cursor:
-        for item in tuple:
-            print(item,end=' ')
-        print()
+    if cursor.rowcount == 0:
+        print('\nNo Orders Here')
+    else:
+        for tuple in cursor:
+            for item in tuple:
+                print(item,end=' ')
+            print()

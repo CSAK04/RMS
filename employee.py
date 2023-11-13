@@ -1,5 +1,12 @@
 import mysql.connector 
 
+db = mysql.connector.connect(host = 'localhost', user='root',database='rms',
+                             passwd='1234',
+                             auth_plugin='mysql_native_password')
+
+cursor = db.cursor()
+cursor.execute('create table IF NOT EXISTS employee(EID int,ENAME varchar(50),DEPT varchar(50),SALARY int)')
+
 class update_emp():
     #To update Name of an Employee
     def name(EID,NAME):
@@ -45,4 +52,3 @@ def del_emp(EID):
 def emp_details(EID):
     cursor.execute("select* from employee where EID = (%s)",(EID,))
     print(cursor.fetchall())
-
