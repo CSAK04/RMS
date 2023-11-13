@@ -38,7 +38,7 @@ def add_emp(NAME,DEPT,sal):
     for record in cursor:
         for EID in record:
             listOfEid.append(EID)
-    for ID in range(1,100):
+    for ID in range(1,10000):
         if ID not in listOfEid:
             EID = ID
             break
@@ -51,4 +51,6 @@ def del_emp(EID):
 
 def emp_details(EID):
     cursor.execute("select* from employee where EID = (%s)",(EID,))
-    print(cursor.fetchall())
+    for tuple in cursor:
+        for item in tuple:
+            print(item)

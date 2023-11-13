@@ -1,15 +1,15 @@
 import mysql.connector
 import employee
-from ORDER import *
+import ORDER
 import MENU
 
 def MANAGER():
     ch = int(input('1:EMPLOYEE\n2:MENU\n3:Order History\n0:Log out\nEnter your Choice:'))
     if ch == 1:
         while True:
-            opt = input('''\n1. Recruit Employee \n2. Dismiss Employee
-3. Edit Employee Details\n4:View Employee Details
-5. Back\nEnter your choice:''')
+            opt = input('''\n1: Recruit Employee \n2: Dismiss Employee
+3: Edit Employee Details\n4: View Employee Details
+5: Back\nEnter your choice:''')
             if opt == '1':
                 name = input('NAME:')
                 dept = input('DEPARTMENT:')
@@ -19,7 +19,7 @@ def MANAGER():
                 eid = input('EID:')
                 employee.del_emp(eid)
             elif opt == '3':
-                editChoice = input('1:NAME\n2:DEPARTMENT\n3:SALARY\n4:EID')
+                editChoice = input('1:NAME\n2:DEPARTMENT\n3:SALARY\n4:EID\nENTER YOUR CHOICE:')
                 if editChoice == '1':
                     eid = input('EMPLOYEE ID:')
                     name = input('NEW NAME:')
@@ -102,16 +102,16 @@ def order():
                 MENU.view_items()
                 while ans.lower() == 'y':
                     MCODE = input('Enter MCODE:')
-                    new_order(MCODE=MCODE,TABLE_NUMBER=table_number)
+                    ORDER.new_order(MCODE=MCODE,TABLE_NUMBER=table_number)
                     ans = input('Do you want to order more(y/n):')
                 
             elif opt == '2':
-                view_order_details(table_number)
+                ORDER.view_order_details(table_number)
                 ORDER_NUMBER = input('ORDER_NUMBER:')
-                cancel_order(ORDER_NUMBER=ORDER_NUMBER)
+                ORDER.cancel_order(ORDER_NUMBER=ORDER_NUMBER)
             
             elif opt == '3':
-                view_order_details(table_number)
+                ORDER.view_order_details(table_number)
 
 
 def verification():
