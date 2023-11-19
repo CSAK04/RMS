@@ -4,45 +4,87 @@ import ORDER
 import MENU
 
 def MANAGER():
-    ch = int(input('1:EMPLOYEE\n2:MENU\n3:Order History\n0:Log out\nEnter your Choice:'))
-    if ch == 1:
-        while True:
-            opt = input('''\n1: Recruit Employee \n2: Dismiss Employee
+    while True:
+        MANAGER_choice = int(input('\n1:EMPLOYEE\n2:MENU\n3:Order History\n0:Log out\nEnter your Choice:'))
+        if MANAGER_choice == 1:
+            while True:
+                opt = input('''\n1: Recruit Employee \n2: Dismiss Employee
 3: Edit Employee Details\n4: View Employee Details
-5: Back\nEnter your choice:''')
-            if opt == '1':
-                name = input('NAME:')
-                dept = input('DEPARTMENT:')
-                sal = input('SALARY:')
-                employee.add_emp(name,dept,sal)
-            elif opt == '2':
-                eid = input('EID:')
-                employee.del_emp(eid)
-            elif opt == '3':
-                editChoice = input('1:NAME\n2:DEPARTMENT\n3:SALARY\n4:EID\nENTER YOUR CHOICE:')
-                if editChoice == '1':
-                    eid = input('EMPLOYEE ID:')
-                    name = input('NEW NAME:')
-                    employee.update_emp.name(EID=eid,NAME=name)
-            elif opt == '4':
-                eid = input('EID:')
-                employee.emp_details(eid)
-            elif opt == '5':
-                MANAGER()
-    if ch == 1:
-        pass
-    if ch == 1:
-        pass
-    if ch == 1:
-        print('Logged Out')
-        verification()
+0: Back\nEnter your choice:''')
+                if opt == '1':
+                    print('\nRecruit Employee')
+                    name = input('NAME:')
+                    dept = input('DEPARTMENT:')
+                    sal = input('SALARY:')
+                    employee.add_emp(name.upper(), dept.upper(),sal)
+                elif opt == '2':
+                    eid = input('EID:')
+                    employee.del_emp(eid)
+                elif opt == '3':
+                    editChoice = input('\n1:NAME\n2:DEPARTMENT\n3:SALARY\n4:EID\n0:BACK\nENTER YOUR CHOICE:')
+                    if editChoice == '1':
+                        eid = input('EMPLOYEE ID:')
+                        name = input('NEW NAME:')
+                        employee.update_emp.name(EID=eid,NAME=name.upper())
+                    elif editChoice == '2':
+                        eid = input('EMPLOYEE ID:')
+                        dept = input('NEW DEPARTMENT:')
+                        employee.update_emp.department(eid,dept.upper())
+                    elif editChoice == '3':
+                        eid = input('EMPLOYEE ID:')
+                        sal = input('NEW SALARY:')
+                        employee.update_emp.salary(eid,sal)
+                elif opt == '4':
+                    eid = input('EID:')
+                    employee.emp_details(eid)
+                elif opt == '0':
+                    break
+
+        elif MANAGER_choice == 2:
+            while True:
+                opt = input('''\n1: Add Item \n2: Remove Item
+3: Edit Item Details\n4: View Item Details
+0: Back\nEnter your choice:''')
+                if opt == '1':
+                    print("\nAdd Item")
+                    name = input('Item Name:')
+                    course = input('Course:')
+                    veg = input('Is Item Vegetarian(Yes/No):')
+                    price = input('Price:')
+                    MENU.add_item(ITEM=name.upper(),COURSE=course.upper(),VEG=veg.upper(),PRICE=price)
+                elif opt == '2':
+                    mcode = input("Enter MCODE:")
+                    MENU.remove_item(mcode)
+                elif opt == '3':
+                    editChoice = input('\n1:NAME\n2:COURSE\n3:PRICE\n4:VEG\n0:BACK\nENTER YOUR CHOICE:')
+                    mcode = input("Enter MCODE:")
+                    if editChoice == '1':
+                        MENU.update_item(mcode, 'ITEM')
+                    elif editChoice == '2':
+                        MENU.update_item(mcode, 'COURSE')
+                    elif editChoice == '3':
+                        MENU.update_item(mcode, 'PRICE')
+                    elif editChoice == '4':
+                        MENU.update_item(mcode, 'VEG')
+                elif opt == '4':
+                    MENU.view_items()
+                elif opt == '0':
+                    break
+
+        elif MANAGER_choice == 3:
+            table_number = input("Enter Table Number:")
+            ORDER.view_order_details(table_number)
+
+        elif MANAGER_choice == 0:
+            print('Logged Out\n')
+            break
 
 
 def WAITER():
-    ch = int(input('1:Choose Table\n2:Log Out\nEnter your Choice:'))
-    if ch == 1:
+    EMPLOYEE_choice = int(input('1:Choose Table\n2:Log Out\nEnter your Choice:'))
+    if EMPLOYEE_choice == 1:
         order()         
-    elif ch == 2:
+    elif EMPLOYEE_choice == 2:
         print('Logged Out\n')
         verification()
     
@@ -73,10 +115,12 @@ def login():
         return 'Invalid Id'
     
 db = mysql.connector.connect(host = 'localhost', user='root',passwd='1234',auth_plugin = 'mysql_native_password')
-cursor = db.cursor(buffered= True)
+#db = mysql.connector.connect(host = 'localhost', user='root',passwd='mes123@tirur')
+#db = mysql.connector.connect(host = 'localhost', user='root',passwd='')
+cursor = db.cursor(buffered=True)
 
 #DATABASE CREATION
-cursor.execute('create DATABASE IF NOT EXISTS rms')
+#cursor.execute('create DATABASE IF NOT EXISTS rms')
 cursor.execute('use rms')
 
 #TABLE CREATION
@@ -133,4 +177,10 @@ def verification():
         print("\nAn user with this ID doesn't exist\nPlease Try again later")
         verification()
 
-verification()
+while True:
+    print("Welcome to rms")
+    root_input = int(input("1.Log In\n0.Exit\nEnter your Choice:"))
+    if root_input == 1:
+        verification()
+    elif root_input == 0:
+        break

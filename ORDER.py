@@ -1,6 +1,9 @@
-import mysql.connector 
+import mysql.connector
+import tabulate
 
-db = mysql.connector.connect(host= 'localhost',user= 'root',passwd= '1234',auth_plugin= 'mysql_native_password')
+db = mysql.connector.connect(host = 'localhost', user='root',passwd='1234',auth_plugin = 'mysql_native_password')
+#db = mysql.connector.connect(host = 'localhost', user='root',passwd='mes123@tirur')
+#db = mysql.connector.connect(host = 'localhost', user='root',passwd='')
 cursor = db.cursor(buffered=True)
 
 cursor.execute('use rms')
@@ -21,12 +24,14 @@ def cancel_order(ORDER_NUMBER):
 
 #To view all orders of a table
 def view_order_details(TABLE_NUMBER):
-    cursor.execute('SELECT ORDER_NO,ITEM,COURSE,PRICE,STATE FROM ORDERS O,MENU M WHERE TABLE_NO = %s AND\
+    cursor.execute('SELECT ORDER_NO,ITEM,COURSE,PRICE,DATE_TIME FROM ORDERS O,MENU M WHERE TABLE_NO = %s AND\
                     O.MCODE = M.MCODE',(TABLE_NUMBER,))
     if cursor.rowcount == 0:
         print('\nNo Orders Here')
     else:
+        table = list()
+        header = ['ORDER NUMBER','ITEM','COURSE','PRICE','DATE/TIME']
         for tuple in cursor:
-            for item in tuple:
-                print(item,end=' ')
-            print()
+            a = list(tuple)
+            table.append(a)
+        print(tabulate.tabulate(table,header,tablefmt="grid"))

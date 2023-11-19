@@ -1,6 +1,8 @@
 import mysql.connector 
 
-db = mysql.connector.connect(host = 'localhost',user='root',passwd='1234',auth_plugin='mysql_native_password')
+db = mysql.connector.connect(host = 'localhost', user='root',passwd='1234',auth_plugin = 'mysql_native_password')
+#db = mysql.connector.connect(host = 'localhost', user='root',passwd='mes123@tirur')
+#db = mysql.connector.connect(host = 'localhost', user='root',passwd='')
 cursor = db.cursor(buffered=True)
 
 cursor.execute('use rms')
@@ -36,7 +38,7 @@ def add_item(ITEM,COURSE,VEG,PRICE):
     cursor.execute('select * from menu where COURSE = %s',(COURSE,))
     l = list(cursor)
     MCODE = i*100+len(l)+1
-    cursor.execute('insert into menu values(%s,%s,%s,%s,%s)',(MCODE,ITEM,COURSE,VEG,PRICE))
+    cursor.execute('insert into menu(MCODE,ITEM,COURSE,VEG,PRICE) values(%s,%s,%s,%s,%s)',(MCODE,ITEM,COURSE,VEG,PRICE))
 
 #Remove from Menu
 def remove_item(MCODE):
@@ -53,10 +55,15 @@ def view_items():
 #Update Menu
 def update_item(MCODE,FIELD_NAME):
     if FIELD_NAME == 'ITEM':
-        ITEM = input('Enter the corrected item name:')
+        ITEM = input('Enter the corrected item name:').upper()
         cursor.execute('update menu set ITEM = %s where MCODE = %s',(ITEM,MCODE))
 
     elif FIELD_NAME == 'COURSE':
-        course = input('Enter the corrected course:')
+        course = input('Enter the corrected course:').upper()
         cursor.execute('update menu set COURSE = %s where MCODE = %s',(course,MCODE))
-        
+
+    elif FIELD_NAME == 'PRICE':
+        price = input('Enter the new Price:')
+        cursor.execute('update menu set course = %s where MCODE = %s',(price,MCODE))
+    elif FIELD_NAME == 'VEG':
+        veg = input('Is item veg(YES/NO)').upper()
