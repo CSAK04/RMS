@@ -1,11 +1,18 @@
 import mysql.connector 
 
-db = mysql.connector.connect(host = 'localhost', user='root',database='rms',
-                             passwd='1234',
-                             auth_plugin='mysql_native_password')
+db = mysql.connector.connect(host = 'localhost', user='root',passwd='1234',auth_plugin = 'mysql_native_password')
+#db = mysql.connector.connect(host = 'localhost', user='root',passwd='mes123@tirur')
+#db = mysql.connector.connect(host = 'localhost', user='root',passwd='')
 
 cursor = db.cursor()
-cursor.execute('create table IF NOT EXISTS employee(EID int,ENAME varchar(50),DEPT varchar(50),SALARY int)')
+cursor.execute('create DATABASE IF NOT EXISTS rms')
+cursor.execute('use rms')
+cursor.execute('create table IF NOT EXISTS employee(EID int,ENAME varchar(50) primary key,DEPT varchar(50),SALARY int,PASS varchar(8) DEFAULT "0")')
+try:
+    cursor.execute('insert into employee values(1,"IBADH","MANAGER",4569,"1234")')
+    db.commit()
+except:
+    pass
 
 class update_emp():
     #To update Name of an Employee
@@ -51,6 +58,9 @@ def del_emp(EID):
 
 def emp_details(EID):
     cursor.execute("select* from employee where EID = (%s)",(EID,))
-    for tuple in cursor:
-        for item in tuple:
-            print(item)
+    if cursor.rowcount == -1:
+        print("No employee with this EID")
+    else:
+        for tuple in cursor:
+            print('EID       :',tuple[0],'\nENAME     :',tuple[1],'\nDEPARTMENT:',tuple[2],'\nSALARY    :',
+                  tuple[3],'\nPASSWORD  :',tuple[4])

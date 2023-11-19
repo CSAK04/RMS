@@ -29,14 +29,14 @@ def add_employee():
     Add_Employee_btn.place_forget()
     Dismiss_Employee_btn.place_forget()
     Info_Employee_btn.place_forget()
-    Name_entry.delete(0,END)
-    Dept_entry.delete(0,END)
-    Salary_entry.delete(0,END)
+    Name_entry.delete(0, END)
+    Dept_entry.delete(0, END)
+    Salary_entry.delete(0, END)
     
     MainLabel.configure(text='EMPLOYEE RECRUITMENT')
-    SecondaryLabel.configure(text = 'ENTER EMPLOYEE DETAILS')
-    submit_btn.configure(command= lambda:add_emp_submitbtn())
-    Left_arrow_btn.configure(command=lambda:MANAGER_EMP())
+    SecondaryLabel.configure(text='ENTER EMPLOYEE DETAILS')
+    submit_btn.configure(command=lambda: add_emp_submitbtn())
+    Left_arrow_btn.configure(command=lambda: MANAGER_EMP())
     Name_entry.configure(placeholder_text="ENTER EMPLOYEE NAME")
     Dept_entry.configure(placeholder_text="ENTER EMPLOYEE DEPARTMENT")
     Salary_entry.configure(placeholder_text="ENTER EMPLOYEE SALARY")
@@ -331,11 +331,11 @@ def login_btn():
     id_entry.configure(placeholder_text='ENTER YOUR EMPLOYEE ID')
     pass_entry.configure(placeholder_text='ENTER YOUR PASSWORD')
     
-    id_entry.place(relx = 0.5,rely = 0.4,anchor = 'center')
-    pass_entry.place(relx = 0.5,rely = 0.52,anchor = 'center')
-    submit_btn.place(relx = 0.5,rely = 0.7,anchor = 'center')
-    Left_arrow_btn.place(relx=0.025,rely=0.03)
-    MainLabel.place(rely = 0.2,relx = 0.5,anchor = 'center')
+    id_entry.place(relx=0.5, rely=0.4, anchor='center')
+    pass_entry.place(relx=0.5, rely=0.52, anchor='center')
+    submit_btn.place(relx=0.5, rely=0.7, anchor='center')
+    Left_arrow_btn.place(relx=0.025, rely=0.03)
+    MainLabel.place(rely=0.2, relx=0.5, anchor='center')
     
     a.bind('<Return>',lambda event:submitbtn())
 
@@ -486,6 +486,6 @@ confirm_entry = customtkinter.CTkEntry(a,placeholder_text= 'CONFIRM',height=50,
                                    font=('halvatica',16),width=300)
 submit_btn = customtkinter.CTkButton(a,text='SUBMIT',height=50,font = ('halvatica',16,'bold'),
                                      command=lambda:submitbtn())
-            
-login()
+course()
+#login()
 a.mainloop()
