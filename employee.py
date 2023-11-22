@@ -3,6 +3,9 @@ import mysql.connector
 db = mysql.connector.connect(host = 'localhost', user='root',passwd='1234',auth_plugin = 'mysql_native_password')
 #db = mysql.connector.connect(host = 'localhost', user='root',passwd='mes123@tirur')
 #db = mysql.connector.connect(host = 'localhost', user='root',passwd='')
+db = mysql.connector.connect(host = 'localhost', user='root',passwd='1234',auth_plugin = 'mysql_native_password')
+#db = mysql.connector.connect(host = 'localhost', user='root',passwd='mes123@tirur')
+#db = mysql.connector.connect(host = 'localhost', user='root',passwd='')
 
 cursor = db.cursor()
 cursor.execute('create DATABASE IF NOT EXISTS rms')
@@ -11,6 +14,14 @@ cursor.execute('create table IF NOT EXISTS employee(EID int primary key,ENAME va
 try:
     cursor.execute('insert into employee(EID,ENAME,DEPT,SALARY,PASS) values(1,"IBADH","MANAGER",4569,"1234"),\
                    (0,"AMAN","WAITER",346474654,"0")')
+    db.commit()
+except:
+    pass
+cursor.execute('create DATABASE IF NOT EXISTS rms')
+cursor.execute('use rms')
+cursor.execute('create table IF NOT EXISTS employee(EID int,ENAME varchar(50) primary key,DEPT varchar(50),SALARY int,PASS varchar(8) DEFAULT "0")')
+try:
+    cursor.execute('insert into employee values(1,"IBADH","MANAGER",4569,"1234")')
     db.commit()
 except:
     pass
