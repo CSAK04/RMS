@@ -39,11 +39,12 @@ def add_item(ITEM,COURSE,VEG,PRICE):
     l = list(cursor)
     MCODE = i*100+len(l)+1
     cursor.execute('insert into menu(MCODE,ITEM,COURSE,VEG,PRICE) values(%s,%s,%s,%s,%s)',(MCODE,ITEM,COURSE,VEG,PRICE))
+    db.commit()
 
 #Remove from Menu
 def remove_item(MCODE):
     cursor.execute('delete from menu where MCODE = %s',(MCODE,))
-
+    db.commit()
 #View Menu
 def view_items():
     cursor.execute('select * FROM MENU')
