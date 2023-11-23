@@ -499,7 +499,7 @@ def LogOut():
     if ans.get() == "Ok":
         login()
 
-def WAITER(ENAME):
+def WAITER():
     Id_Entry.place_forget()
     Pass_Entry.place_forget()
 
@@ -555,7 +555,7 @@ def verify_id():
                 MainLabel.place_forget()
                 if i[2] == "WAITER":
                     CTkMessagebox.CTkMessagebox(title=ENAME, message="Welcome "+ENAME, icon='check')
-                    WAITER(i[3])
+                    WAITER()
                 if i[2] == "MANAGER":
                     CTkMessagebox.CTkMessagebox(title=i[3], message="Welcome " + i[3], icon='check')
                     MANAGER()
