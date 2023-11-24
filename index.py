@@ -1,6 +1,6 @@
-import time
 from tkinter import *
 from tkinter import messagebox
+from tkinter import ttk
 import CTkMessagebox
 import customtkinter
 from PIL import ImageTk, Image
@@ -338,7 +338,7 @@ def MenuUpdate(item):
         VEG = VegOptionMenu.get()
         PRICE = Sal_Entry.get()
 
-        cursor.execute('SELECT ITEM,COURSE,VEG,PRICE FROM menu where MCODE = %s', (MCODE,))
+        cursor.execute('SELECT ITEM,COURSE,VEG,PRICE FROM MENU where MCODE = %s', (MCODE,))
         data = cursor.fetchone()
         if ITEM == '':
             pass
@@ -494,6 +494,37 @@ def FOOD():
     Info_Menu_btn.place(relx=0.45, rely=0.5, anchor='center')
     Left_arrow_btn.place(relx=0.025, rely=0.03)
 
+def OrderHistory():
+    Menu_btn.place_forget()
+    Employee_btn.place_forget()
+    Order_history_btn.place_forget()
+    LogOut_btn.place_forget()
+
+    Info_Employee_Frame.place(relx=0.02, rely=0.15)
+    cursor.execute('SELECT ORDER_NO,TABLE_NO,ITEM,COURSE,VEG,PRICE,DATE_TIME FROM ORDERS NATURAL JOIN MENU')
+    table = list()
+    header = ['ORDER_NO','TABLE_NO','ITEM','COURSE','VEG','PRICE','DATE_TIME']
+    for tuple in cursor:
+        MenuList = list(tuple)
+        table.append(MenuList)
+    total_rows = len(table)
+    total_columns = len(table[0])
+    for i in range(len(header)):
+        e = customtkinter.CTkEntry(Info_Employee_Frame, width=180, font=('Arial', 16, 'bold'), corner_radius=0)
+        e.grid(row=0, column=i)
+        e.insert(END, header[i])
+        e.configure(state=DISABLED)
+    for i in range(total_rows):
+        for j in range(total_columns):
+            e = customtkinter.CTkEntry(Info_Employee_Frame, width=180, font=('Arial', 16, 'bold'), corner_radius=0)
+            e.grid(row=i + 1, column=j)
+            e.insert(END, table[i][j])
+            e.configure(state=DISABLED)
+
+    Left_arrow_btn.configure(command=lambda: MANAGER())
+
+    Left_arrow_btn.place(relx=0.025, rely=0.03)
+
 def LogOut():
     ans = CTkMessagebox.CTkMessagebox(title=ENAME, message="Do you want to Log Out", icon='question', option_1="Ok", option_2="Cancel")
     if ans.get() == "Ok":
@@ -521,7 +552,7 @@ def MANAGER():
 
     Employee_btn.configure(command=lambda: EMPLOYEE())
     LogOut_btn.configure(command=lambda: LogOut())
-    Order_history_btn.configure(command=lambda: History())
+    Order_history_btn.configure(command=lambda: OrderHistory())
     Menu_btn.configure(command=lambda: FOOD())
 
     Employee_btn.place(relx=0.65, rely=0.3, anchor='center')
@@ -670,7 +701,6 @@ Edit_Employee_img = Edit_Employee_img.resize((120, 120))
 Add_Menu_img = Image.open('Images/add_menu.png')
 #Add_Menu_img.resize((60,120))
 Remove_Menu_img = Image.open('Images/remove_menu.png')
-print(0)
 Remove_Menu_img.resize((120,120))
 Info_Menu_img = Image.open('Images/edit_menu.png')
 Info_Menu_img.resize((120,120))

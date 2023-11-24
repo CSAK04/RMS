@@ -2,8 +2,7 @@ from tkinter import *
 import customtkinter
 from PIL import ImageTk,Image
 import mysql.connector
-
-import employee as e
+from CTkTable import *
 
 customtkinter.set_appearance_mode('dark')
 customtkinter.set_default_color_theme('green')
@@ -357,8 +356,16 @@ def login():
     Manager_btn.place(relx = 0.35,rely = 0.6,anchor = 'center')
     Salesman_btn.place(relx = 0.65,rely = 0.6,anchor = 'center')
     MainLabel.place(rely = 0.2,relx = 0.5,anchor = 'center')
-     
-    
+
+
+
+
+
+
+
+
+
+
 a = customtkinter.CTk()
 #code to insert title
 a.title('RESTAURANT MANAGEMENT SYSTEM')
@@ -378,7 +385,7 @@ cursor = db.cursor()
 cursor.execute('use rms')
 
 
-Manager_img = Image.open('images/Manager_img.png')
+'''Manager_img = Image.open('images/Manager_img.png')
 Salesman_img = Image.open('images/Salesman_img.png')
 Menu_img = Image.open('images/menu.png')
 appetizer_img = Image.open('images/soup.png')
@@ -486,7 +493,17 @@ EID_entry = customtkinter.CTkEntry(a,placeholder_text='EID',height=50,
 confirm_entry = customtkinter.CTkEntry(a,placeholder_text= 'CONFIRM',height=50,
                                    font=('halvatica',16),width=300)
 submit_btn = customtkinter.CTkButton(a,text='SUBMIT',height=50,font = ('halvatica',16,'bold'),
-                                     command=lambda:submitbtn())
-course()
+                                     command=lambda:submitbtn())'''
+
+
+def table():
+    cursor.execute('select * from Orders')
+    data = list()
+    for tuple in cursor:
+        data.append(list(tuple))
+    print(data)
+    table = CTkTable(a, values=data, row=len(data), column=len(data[0]))
+    table.pack()
 #login()
+table()
 a.mainloop()
