@@ -165,67 +165,60 @@ def course():
                 list_of_entry[index][1].delete(0,END)
                 list_of_entry[index][1].configure(placeholder_text=str(n-1))
                 list_of_entry[index][4] = n - 1
-            
-    appetizer_btn.place_forget()
-    mainCourse_btn.place_forget()
-    dessert_btn.place_forget()
-    beverages_btn.place_forget()
     
     list_of_items = list()
     list_of_entry = list()
-    
-    cursor.execute('select * from menu')
-    for record in cursor:
-        list_of_items.append(record)
-    
-    mainFrame = customtkinter.CTkScrollableFrame(a,width=984,height=440,corner_radius=0,fg_color='transparent')
-    
-    secondaryFrame = customtkinter.CTkFrame(master= mainFrame,width= 974,fg_color='transparent',height=230)
-    
-    mainFrame.place(relx= 0,rely=0.1)
-    secondaryFrame.grid(column= 0,row= 0,pady= (20,0))
-    Left_arrow_btn.configure(command= lambda:FoodMenu())
-    
-    for i in range(len(list_of_items)):
-        
+    courses = ['APPETIZER','MAIN','DESSERT','BEVERAGES']
+    for course in courses:
+        cursor.execute('select * from menu where course=%s',(course,))
+        for record in cursor:
+            list_of_items.append(record)
+
+        mainFrame = customtkinter.CTkScrollableFrame(a,width=984,height=440,corner_radius=0,fg_color='transparent')
+
+        secondaryFrame = customtkinter.CTkFrame(master= mainFrame,width= 974,fg_color='transparent',height=230)
+
+        mainFrame.place(relx= 0,rely=0.1)
+        secondaryFrame.grid(column= 0,row= 0,pady= (20,0))
+
+        for i in range(len(list_of_items)):
+                menu_frame = customtkinter.CTkFrame(secondaryFrame)
+
+                name=list_of_items[i][1]
+                name = name.split()
+                tempName=''
+                for j in range(len(name)) :
+                    tempName += '_' + name[j]
+                name = tempName
+                try:
+                    menu_img = Image.open('{}.png'.format(name))
+                    menu_icon = customtkinter.CTkImage(light_image= menu_img, size= ((120,120)))
+                except:
+                    menu_img = Image.open('{}.jpg'.format(name))
+                    menu_icon = customtkinter.CTkImage(light_image=menu_img, size=((120, 120)))
+
+                menu_label = customtkinter.CTkLabel(menu_frame,text=list_of_items[i][1]
+                                                    ,anchor= 'center')
+                img_label = customtkinter.CTkLabel(menu_frame,image=menu_icon,text= None)
+                QuantityFrame = customtkinter.CTkFrame(menu_frame,fg_color='transparent')
+                quantityLabel = customtkinter.CTkLabel(QuantityFrame,text = 'QUANTITY',corner_radius= 0)
+                quantityEntry = customtkinter.CTkEntry(QuantityFrame,placeholder_text='0',width= 80,corner_radius= 0)
+                incrementButton = customtkinter.CTkButton(QuantityFrame,text='+',width= 30,corner_radius= 0)
+                decrementButton = customtkinter.CTkButton(QuantityFrame,text='-',width= 30,corner_radius= 0)
+
+                menu_frame.grid(column= i,row= 0,padx= (20,20))
+                menu_label.grid(column= 0,row= 0,padx = (20,20))
+                img_label.grid(column= 0, row= 1)
+                QuantityFrame.grid(column= 0,row= 2,padx = (20,20),pady= 20)
+                quantityLabel.grid(column= 0, row= 0,padx= (0,10))
+                decrementButton.grid(column= 1,row= 0)
+                quantityEntry.grid(column= 2,row= 0)
+                incrementButton.grid(column= 3,row= 0)
+
+                list_of_entry.append([i,quantityEntry,incrementButton,decrementButton,0])
         try:
-            if i % 3 == 0:
-                continue
-                #frame
-            menu_frame = customtkinter.CTkFrame(secondaryFrame)
-            
-            name=list_of_items[i][1]
-            name = name.split()
-            tempName=''
-            for j in range(len(name)) :
-                tempName += '_' + name[j]
-            name = tempName
-            
-            menu_img = Image.open('images/{}.png'.format(name))
-            menu_icon = customtkinter.CTkImage(light_image= menu_img, size= ((120,120)))
-            
-            menu_label = customtkinter.CTkLabel(menu_frame,text=list_of_items[i][1]
-                                                ,anchor= 'center')
-            img_label = customtkinter.CTkLabel(menu_frame,image=menu_icon,text= None)
-            QuantityFrame = customtkinter.CTkFrame(menu_frame,fg_color='transparent')
-            quantityLabel = customtkinter.CTkLabel(QuantityFrame,text = 'QUANTITY',corner_radius= 0)
-            quantityEntry = customtkinter.CTkEntry(QuantityFrame,placeholder_text='0',width= 80,corner_radius= 0)
-            incrementButton = customtkinter.CTkButton(QuantityFrame,text='+',width= 30,corner_radius= 0)
-            decrementButton = customtkinter.CTkButton(QuantityFrame,text='-',width= 30,corner_radius= 0)
-            
-            menu_frame.grid(column= i,row= 0,padx= (20,20))
-            menu_label.grid(column= 0,row= 0,padx = (20,20))
-            img_label.grid(column= 0, row= 1)
-            QuantityFrame.grid(column= 0,row= 2,padx = (20,20),pady= 20)
-            quantityLabel.grid(column= 0, row= 0,padx= (0,10))
-            decrementButton.grid(column= 1,row= 0)
-            quantityEntry.grid(column= 2,row= 0)
-            incrementButton.grid(column= 3,row= 0)
-            
-            list_of_entry.append([i,quantityEntry,incrementButton,decrementButton,0])
-            
             list_of_entry[0][2].configure(command= lambda:itemincrement(list_of_entry[0][0]))
-            list_of_entry[0][3].configure(command= lambda:itemdecrement(list_of_entry[0][0]))
+            list_of_entry[0][3].configure(command=lambda:itemdecrement(list_of_entry[0][0]))
             list_of_entry[1][2].configure(command= lambda:itemincrement(list_of_entry[1][0]))
             list_of_entry[1][3].configure(command= lambda:itemdecrement(list_of_entry[1][0]))
             list_of_entry[2][2].configure(command= lambda:itemincrement(list_of_entry[2][0]))
@@ -496,14 +489,6 @@ submit_btn = customtkinter.CTkButton(a,text='SUBMIT',height=50,font = ('halvatic
                                      command=lambda:submitbtn())'''
 
 
-def table():
-    cursor.execute('select * from Orders')
-    data = list()
-    for tuple in cursor:
-        data.append(list(tuple))
-    print(data)
-    table = CTkTable(a, values=data, row=len(data), column=len(data[0]))
-    table.pack()
 #login()
-table()
+course()
 a.mainloop()

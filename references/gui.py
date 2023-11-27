@@ -4,7 +4,7 @@ import customtkinter
 import employee as e
 from PIL import ImageTk,Image
 
-'''def l():
+'''def list():
     n = event.width
     k = event.height
     home = hc.resize((n,k))

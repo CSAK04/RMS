@@ -15,8 +15,8 @@ def new_order(MCODE,TABLE_NUMBER):
         for orderNo in tuple:
             listOfOrderNumber.append(orderNo)
     newOrderNumber = max(listOfOrderNumber) + 1
-    cursor.execute('INSERT INTO ORDERS(ORDER_NO,MCODE,TABLE_NO) VALUES\
-        (%s,%s,%s)',(newOrderNumber,MCODE,TABLE_NUMBER))
+    cursor.execute('INSERT INTO ORDERS(ORDER_NO,MCODE,TABLE_NO,QUANTITY) VALUES\
+        (%s,%s,%s,%s)',(newOrderNumber,MCODE,TABLE_NUMBER,QUANTITY))
 
 #Cancel an order
 def cancel_order(ORDER_NUMBER):

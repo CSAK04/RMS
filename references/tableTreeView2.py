@@ -1,10 +1,12 @@
 from tkinter import *
 from tkinter import ttk
+import customtkinter
 import mysql.connector
 
-import customtkinter
+customtkinter.set_default_color_theme('green')
+customtkinter.set_appearance_mode('dark')
 
-a = Tk()
+a = customtkinter.CTk()
 db = mysql.connector.connect(host='localhost', user='root', passwd='1234', auth_plugin='mysql_native_password')
 #db = mysql.connector.connect(host='localhost', user='root', passwd='mes123@tirur')
 #db = mysql.connector.connect(host='localhost', user='root', passwd='')
@@ -16,7 +18,7 @@ cursor.execute('select ORDER_NO,TABLE_NO,ITEM,COURSE,VEG,PRICE,DATE_TIME from OR
 data = list()
 for tuple in cursor:
     data.append(tuple)
-frame = Frame(a, height=25)
+frame = Frame(a)
 frame.pack()
 
 st = ttk.Style()
@@ -30,11 +32,12 @@ st.layout("Custom.Treeview.Heading", [
         ]})
     ]})
 ])
-st.configure("Treeview", background="#2FA572", foreground="gray98")
-st.configure("Custom.Treeview.Heading", background="#2FA572", foreground="gray98", fieldBackground="red")
+st.configure("Treeview", background="#4A4D50", foreground="#F9F9FA", bordercolor="red")
+st.configure("Custom.Treeview.Heading", background="#343638", foreground="gray98", border='gray28', borderwidth=234)
 st.map("Custom.Treeview.Heading", relief = [('active','groove'),('pressed','flat')])
-
-tableView = ttk.Treeview(frame, style="Custom.Treeview")
+#343638
+#979DA2
+tableView = ttk.Treeview(frame, style="Custom.Treeview", height=len(data))
 tableView['columns'] = ('ORDER_NO','TABLE_NO','ITEM','COURSE','VEG','PRICE','DATE_TIME')
 tableView.column('#0', width=0, stretch=NO)
 tableView.column('ORDER_NO', anchor=CENTER, width=80)
