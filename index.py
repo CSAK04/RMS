@@ -891,9 +891,12 @@ def course():
     except:
         pass
 
-def BillPaid(TOTAL):
+def BillPaid(TOTAL, TABLENUMBER):
     ans = CTkMessagebox.CTkMessagebox(title='RMS', message='Payment of $ '+str(TOTAL)+' successful',
                                       icon='check')
+    cursor.execute('update ORDERHISTORY set state="PAID" where TABLE_NO=%s', (TABLENUMBER,))
+    cursor.execute('delete from ORDERS where TABLE_NO=%s', (TABLENUMBER,))
+    db.commit()
     if ans.get() == 'OK':
         BillWindow.destroy()
 
@@ -913,7 +916,8 @@ def PayBills(TABLE_NUMBER):
     for record in cursor:
         list_of_items.append(record)
     if list_of_items == []:
-        print('No orders')
+        BillWindow.destroy()
+        CTkMessagebox.CTkMessagebox(title='RMS', message='No Orders', icon='warning')
     else:
         TotalAmount = 0
         secondaryFrame = customtkinter.CTkScrollableFrame(BillWindow, width=574, fg_color='transparent', height=300)
@@ -954,7 +958,7 @@ def PayBills(TABLE_NUMBER):
                                                     font=customtkinter.CTkFont(size=25))
         TotalAmount_Label = customtkinter.CTkLabel(BillWindow, text='$ ' + str(TotalAmount), anchor='center',
                                                    font=customtkinter.CTkFont(family='roman', size=30))
-        submit_btn.configure(text='PAY', height=35, command=lambda: BillPaid(TotalAmount))
+        submit_btn.configure(text='PAY', height=35, command=lambda: BillPaid(TotalAmount, TABLE_NUMBER))
         MainLabel.configure(text='PAYMENT')
 
         MainLabel.grid(row=0, column=0, columnspan=3, pady=(20, 0))
