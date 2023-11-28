@@ -145,7 +145,7 @@ class App(customtkinter.CTk):
         self.seg_button_1.set("Value 2")
 
     def open_input_dialog_event(self):
-        dialog = customtkinter.CTkInputDialog(text="Type in a number:", title="CTkInputDialog")
+        dialog = customtkinter.CTkInputDialog(text="Type in BillWindow number:", title="CTkInputDialog")
         print("CTkInputDialog:", dialog.get_input())
 
     def change_appearance_mode_event(self, new_appearance_mode: str):

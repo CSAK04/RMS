@@ -349,9 +349,9 @@ a.title('RESTAURANT MANAGEMENT SYSTEM')
 a.iconbitmap('images/logo.ico')
 #code to give size of the form
 a.geometry('1000x600')
-#a.minsize(900,600)
-#a.maxsize(1000,700)
-#a.resizable(0,0)
+#BillWindow.minsize(900,600)
+#BillWindow.maxsize(1000,700)
+#BillWindow.resizable(0,0)
 
 courses = ['APPETIZER', 'MAIN', 'DESSERT', 'BEVERAGE']
 

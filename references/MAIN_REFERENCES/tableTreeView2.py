@@ -38,7 +38,7 @@ st.map("Custom.Treeview.Heading", relief = [('active','groove'),('pressed','flat
 #343638
 #979DA2
 tableView = ttk.Treeview(frame, style="Custom.Treeview", height=len(data))
-tableView['columns'] = ('ORDER_NO','TABLE_NO','ITEM','COURSE','VEG','PRICE','DATE_TIME')
+tableView['columns'] = ('ORDER_NO', 'TABLE_NO', 'ITEM', 'COURSE', 'VEG', 'PRICE', 'DATE_TIME')
 tableView.column('#0', width=0, stretch=NO)
 tableView.column('ORDER_NO', anchor=CENTER, width=80)
 tableView.column('TABLE_NO', anchor=CENTER, width=80)

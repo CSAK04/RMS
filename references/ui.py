@@ -284,7 +284,7 @@ def EMPLOYEE():
     Left_arrow_btn.place_forget()
     Menu_btn.place_forget()
     
-    #UpperFrame = customtkinter.CTkFrame(a,width = 100, height = 100)
+    #UpperFrame = customtkinter.CTkFrame(BillWindow,width = 100, height = 100)
     Left_arrow_btn.configure(command= lambda:login_btn())
     
     #UpperFrame.place(relx=0,rely=0,relwidth = 2,relheight = 0.11)
@@ -363,12 +363,12 @@ a = customtkinter.CTk()
 #code to insert title
 a.title('RESTAURANT MANAGEMENT SYSTEM')
 #code to insert icon
-#a.iconbitmap('images/logo.ico')
+#BillWindow.iconbitmap('images/logo.ico')
 #code to give size of the form
 a.geometry('1000x600')
-#a.minsize(900,600)
-#a.maxsize(1000,700)
-#a.resizable(0,0)
+#BillWindow.minsize(900,600)
+#BillWindow.maxsize(1000,700)
+#BillWindow.resizable(0,0)
 
 db = mysql.connector.connect(host = 'localhost', user='root',\
                              passwd='1234',\
@@ -421,71 +421,71 @@ Info_Employee_icon = ImageTk.PhotoImage(Info_Employee_img)
 Left_arrow_icon = ImageTk.PhotoImage(Left_arrow_img)
 
 
-Manager_btn = customtkinter.CTkButton(a,text = 'Manager',image = Manager_icon,height= 170,width= 150,
+Manager_btn = customtkinter.CTkButton(BillWindow,text = 'Manager',image = Manager_icon,height= 170,width= 150,
                                       compound='top',command=None,text_color= 'silver')
                                     
-Salesman_btn = customtkinter.CTkButton(a,text = 'Salesman',image = Salesman_icon,height= 170,width= 150,
+Salesman_btn = customtkinter.CTkButton(BillWindow,text = 'Salesman',image = Salesman_icon,height= 170,width= 150,
                                        compound='top',command= None)
 
-Menu_btn = customtkinter.CTkButton(a,text='MENU',image=Menu_icon,compound='top',height= 170,width= 150,
+Menu_btn = customtkinter.CTkButton(BillWindow,text='MENU',image=Menu_icon,compound='top',height= 170,width= 150,
                                    command = lambda:FoodMenu())
 
-appetizer_btn = customtkinter.CTkButton(a,text= 'APPETIZER',image= appetizer_icon,compound='top',height= 170,width= 150,
+appetizer_btn = customtkinter.CTkButton(BillWindow,text= 'APPETIZER',image= appetizer_icon,compound='top',height= 170,width= 150,
                                         command = None)
 
-mainCourse_btn = customtkinter.CTkButton(a,text= 'MAIN COURSE',image= mainCourse_icon,compound='top',height= 170,width= 150,
+mainCourse_btn = customtkinter.CTkButton(BillWindow,text= 'MAIN COURSE',image= mainCourse_icon,compound='top',height= 170,width= 150,
                                          command = None)
 
-dessert_btn = customtkinter.CTkButton(a,text= 'DESSERT',image= dessert_icon,compound='top',height= 170,width= 150,
+dessert_btn = customtkinter.CTkButton(BillWindow,text= 'DESSERT',image= dessert_icon,compound='top',height= 170,width= 150,
                                       command = None)
 
-beverages_btn = customtkinter.CTkButton(a,text= 'BEVERAGES',image= beverages_icon,compound='top',height= 170,width= 150,
+beverages_btn = customtkinter.CTkButton(BillWindow,text= 'BEVERAGES',image= beverages_icon,compound='top',height= 170,width= 150,
                                         command = None)
 
-Order_history_btn = customtkinter.CTkButton(a,image = Order_history_icon,text = 'Order History',height= 170,
+Order_history_btn = customtkinter.CTkButton(BillWindow,image = Order_history_icon,text = 'Order History',height= 170,
                                             width= 150,compound='top',command=lambda:History())
 
-LogOut_btn = customtkinter.CTkButton(a,image=LogOut_icon,text='Log Out',compound='top',height= 170,width= 150,
+LogOut_btn = customtkinter.CTkButton(BillWindow,image=LogOut_icon,text='Log Out',compound='top',height= 170,width= 150,
                                      command = None)
 
-Add_Employee_btn = customtkinter.CTkButton(a,image=Add_Employee_icon,text='RECRUIT EMPLOYEE',compound='top',
+Add_Employee_btn = customtkinter.CTkButton(BillWindow,image=Add_Employee_icon,text='RECRUIT EMPLOYEE',compound='top',
                                            height= 170,width= 150,command = lambda:add_employee())
-Dismiss_Employee_btn = customtkinter.CTkButton(a,image=Dismiss_Employee_icon,text='DISMISS EMPLOYEE',
+Dismiss_Employee_btn = customtkinter.CTkButton(BillWindow,image=Dismiss_Employee_icon,text='DISMISS EMPLOYEE',
                                                compound='top',height= 170,width= 150,
                                                command = lambda:dismiss_employee())
-Info_Employee_btn = customtkinter.CTkButton(a,image= Info_Employee_icon,text='EMPLOYEE INFO',compound='top',
+Info_Employee_btn = customtkinter.CTkButton(BillWindow,image= Info_Employee_icon,text='EMPLOYEE INFO',compound='top',
                                             height= 170,width= 150,command = None)
 
-Left_arrow_btn = customtkinter.CTkButton(a,image=Left_arrow_icon,text = '',width=40,height=20,
+Left_arrow_btn = customtkinter.CTkButton(BillWindow,image=Left_arrow_icon,text = '',width=40,height=20,
                                          corner_radius=1000,command=None)
 
-MainLabel = customtkinter.CTkLabel(a,text="Main Label",font=customtkinter.CTkFont(size = 40),
+MainLabel = customtkinter.CTkLabel(BillWindow,text="Main Label",font=customtkinter.CTkFont(size = 40),
                                    text_color='#2fa572')
 
-SecondaryLabel = customtkinter.CTkLabel(a,text="Secondary Label",font=customtkinter.CTkFont(size = 30),
+SecondaryLabel = customtkinter.CTkLabel(BillWindow,text="Secondary Label",font=customtkinter.CTkFont(size = 30),
                                         text_color='#2fa572')
 
-id_entry = customtkinter.CTkEntry(a,placeholder_text='ENTER YOUR EMPLOYEE ID',height=50,
+id_entry = customtkinter.CTkEntry(BillWindow,placeholder_text='ENTER YOUR EMPLOYEE ID',height=50,
                                   font=('halvatica',16),width=300)
 
-pass_entry = customtkinter.CTkEntry(a,placeholder_text='ENTER YOUR PASSWORD',height=50,
+pass_entry = customtkinter.CTkEntry(BillWindow,placeholder_text='ENTER YOUR PASSWORD',height=50,
                                     font=('halvatica',15),width=300,show= '*')
 
-Name_entry = customtkinter.CTkEntry(a,placeholder_text="ENTER EMPLOYEE NAME",height=50,
+Name_entry = customtkinter.CTkEntry(BillWindow,placeholder_text="ENTER EMPLOYEE NAME",height=50,
                                   font=('halvatica',16),width=300)
 
-Dept_entry = customtkinter.CTkEntry(a,placeholder_text="ENTER EMPLOYEE DEPARTMENT",height=50,
+Dept_entry = customtkinter.CTkEntry(BillWindow,placeholder_text="ENTER EMPLOYEE DEPARTMENT",height=50,
                                     font=('halvatica',16),width=300)
 
-Salary_entry = customtkinter.CTkEntry(a,placeholder_text="ENTER EMPLOYEE SALARY",height=50,
+Salary_entry = customtkinter.CTkEntry(BillWindow,placeholder_text="ENTER EMPLOYEE SALARY",height=50,
                                       font=('halvatica',16),width=300)
 
-EID_entry = customtkinter.CTkEntry(a,placeholder_text='EID',height=50,
+EID_entry = customtkinter.CTkEntry(BillWindow,placeholder_text='EID',height=50,
                                    font=('halvatica',16),width=300)
 
-confirm_entry = customtkinter.CTkEntry(a,placeholder_text= 'CONFIRM',height=50,
+confirm_entry = customtkinter.CTkEntry(BillWindow,placeholder_text= 'CONFIRM',height=50,
                                    font=('halvatica',16),width=300)
-submit_btn = customtkinter.CTkButton(a,text='SUBMIT',height=50,font = ('halvatica',16,'bold'),
+submit_btn = customtkinter.CTkButton(BillWindow,text='SUBMIT',height=50,font = ('halvatica',16,'bold'),
                                      command=lambda:submitbtn())'''
 
 

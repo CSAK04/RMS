@@ -22,7 +22,7 @@ def new_order(MCODE,TABLE_NUMBER):
 def cancel_order(ORDER_NUMBER):
     cursor.execute('Update orders set state="CANCELLED" where ORDER_NO = %s',(ORDER_NUMBER,))
 
-#To view all orders of a table
+#To view all orders of BillWindow table
 def view_order_details(TABLE_NUMBER):
     cursor.execute('SELECT ORDER_NO,ITEM,COURSE,PRICE,DATE_TIME FROM ORDERS O,MENU M WHERE TABLE_NO = %s AND\
                     O.MCODE = M.MCODE',(TABLE_NUMBER,))

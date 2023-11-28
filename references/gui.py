@@ -19,7 +19,7 @@ a.title('RESTAURANT MANAGEMENT SYSTEM')
 a.iconbitmap('images/logo.ico')
 #code to give size of the form
 a.geometry('1000x600')
-#a.resizable(0,0)
+#BillWindow.resizable(0,0)
 
 home = Image.open('images/home.png')
 home = home.resize((40,40))
@@ -47,21 +47,21 @@ bill_btn.place(in_=upperBar,relx = 0.2)
 
 #print(home_btn.configure())
 
-'''m = Menu(a)
+'''m = Menu(BillWindow)
 f = Menu(m,tearoff = 0)
 m.add_cascade(label = "home",image= home_icon,menu = f)
-f.add_command(label='Exit',command = a.destroy)'''
+f.add_command(label='Exit',command = BillWindow.destroy)'''
 
 
 
-'''m=Menubutton(a,text = "home",image = home_icon)
+'''m=Menubutton(BillWindow,text = "home",image = home_icon)
 m.place(relx=0.5,rely = 0.5)
 
 
 h = Menu(m)
 m.config(menu=h)
-#Menu(a).add_cascade(label = 'file',menu = f)
-#a.config(menu = m)'''
+#Menu(BillWindow).add_cascade(label = 'file',menu = f)
+#BillWindow.config(menu = m)'''
 
 
 a.mainloop()

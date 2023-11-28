@@ -1,14 +1,13 @@
 from tkinter import *
-from tkinter import messagebox
 from tkinter import ttk
 import CTkMessagebox
 import customtkinter
-from PIL import Image
+from PIL import Image,ImageTk
 import mysql.connector
 
-class MENU():
+
+class MENU:
     def add_item(ITEM, COURSE, VEG, PRICE):
-        courses = ['APPETIZER', 'MAIN', 'DESSERT', 'BEVERAGE']
         for i in range(len(courses)):
             if courses[i] == COURSE:
                 break
@@ -25,7 +24,8 @@ class MENU():
         cursor.execute('delete from menu where MCODE = %s', (MCODE,))
         db.commit()
 
-class employee():
+
+class employee:
     def add_emp(NAME, DEPT, sal):
         listOfEid = list()
         cursor.execute('select EID from employee')
@@ -38,8 +38,9 @@ class employee():
                 break
         cursor.execute("insert into employee(EID,ENAME,DEPT,salary) values(%s,%s,%s,%s)", (EID, NAME, DEPT, sal))
         db.commit()
+
     def del_emp(EID):
-        cursor.execute("delete from employee where EID = (%s)",(EID,))
+        cursor.execute("delete from employee where EID = (%s)", (EID,))
         db.commit()
         
 def QUIT():
@@ -47,59 +48,15 @@ def QUIT():
     if ans.get() == "Ok":
         a.destroy()
 
-def Emp_Update(item="basic"):
-    if item == "basic":
-        a.unbind('<Return>')
-        NEWLIST = list()
-        for i in entryList:
-            rowList = list()
-            for j in i:
-                rowList.append(j[0].get())
-            NEWLIST.append(tuple(rowList))
-        print(NEWLIST)
-        duplicate = False
-        for i in NEWLIST:
-            print(1)
-            cursor.execute('select ENAME,DEPT,salary,PASS from employee where EID = %s',(i[0],))
-            data = cursor.fetchall()
-            print(data)
-
-            if data[0][0] == i[1]:
-                print(0)
-                pass
-            else:
-                cursor.execute('update employee set ENAME = %s where EID = %s', (i[1].upper(), i[0]))
-                db.commit()
-
-            if data[0][1] == i[2]:
-                print(1)
-                pass
-            else:
-                cursor.execute('update employee set DEPT = %s where EID = %s', (i[2].upper(), i[0]))
-                db.commit()
-
-            if data[0][2] == i[3]:
-                pass
-            else:
-                cursor.execute('update employee set salary = %s where EID = %s', (i[3], i[0]))
-                db.commit()
-
-            if data[0][3] == i[5]:
-                pass
-            else:
-                cursor.execute('update employee set PASS = %s where EID = %s', (i[5], i[0]))
-                db.commit()
-
-        CTkMessagebox.CTkMessagebox(message="Employee Details Updated Successfully", title="RMS")
-        EMPLOYEE()
-    elif item == "ADD":
+def Emp_Update(item):
+    if item == "ADD":
         a.unbind('<Return>')
         ENAME = Name_Entry.get()
         DEPT = DeptOptionMenu.get()
         print(DEPT)
         SAL = Sal_Entry.get()
         if DEPT == 'DEPARTMENT':
-            CTkMessagebox.CTkMessagebox(title='RMS', message='Choose a Department')
+            CTkMessagebox.CTkMessagebox(title='RMS', message='Choose BillWindow Department')
             a.bind('<Return>', lambda event: Emp_Update("ADD"))
         else:
             employee.add_emp(NAME=ENAME, DEPT=DEPT, sal=SAL)
@@ -232,7 +189,7 @@ def Dismiss_employee():
         entryList.append(rowList)
 
     submit_btn.place(relx=0.8, rely=0.87)
-    a.bind('<Return>', lambda: Emp_Update())'''
+    BillWindow.bind('<Return>', lambda: Emp_Update())'''
 
 def Id_Menu(ID):
     Pass_Entry.configure(placeholder_text='PASSWORD')
@@ -537,7 +494,7 @@ def OrderHistory():
             e.grid(row=i + 1, column=j)
             e.insert(END, table[i][j])
             e.configure(state=DISABLED)'''
-    cursor.execute('select ORDER_NO,TABLE_NO,ITEM,COURSE,VEG,PRICE,DATE_TIME from ORDERS natural join menu')
+    cursor.execute('SELECT ORDER_NO,TABLE_NO,ITEM,COURSE,VEG,QUANTITY,PRICE,DATE_TIME FROM ORDERS NATURAL JOIN MENU')
     data = list()
     for tuple in cursor:
         data.append(tuple)
@@ -546,13 +503,14 @@ def OrderHistory():
 
 
     tableView = ttk.Treeview(frame, style="Custom.Treeview", height=len(data))
-    tableView['columns'] = ('ORDER_NO', 'TABLE_NO', 'ITEM', 'COURSE', 'VEG', 'PRICE', 'DATE_TIME')
+    tableView['columns'] = ('ORDER_NO', 'TABLE_NO', 'ITEM', 'COURSE', 'VEG', 'QUANTITY', 'PRICE', 'DATE_TIME')
     tableView.column('#0', width=0, stretch=NO)
     tableView.column('ORDER_NO', anchor=CENTER, width=100)
     tableView.column('TABLE_NO', anchor=CENTER, width=130)
     tableView.column('ITEM', anchor=CENTER, width=200)
     tableView.column('COURSE', anchor=CENTER, width=130)
     tableView.column('VEG', anchor=CENTER, width=90)
+    tableView.column('QUANTITY', anchor=CENTER, width=90)
     tableView.column('PRICE', anchor=CENTER, width=130)
     tableView.column('DATE_TIME', anchor=CENTER, width=130)
 
@@ -562,6 +520,7 @@ def OrderHistory():
     tableView.heading('ITEM', anchor=CENTER, text='ITEM')
     tableView.heading('COURSE', anchor=CENTER, text='COURSE')
     tableView.heading('VEG', anchor=CENTER, text='VEG')
+    tableView.heading('QUANTITY', anchor=CENTER, text='QUANTITY')
     tableView.heading('PRICE', anchor=CENTER, text='PRICE')
     tableView.heading('DATE_TIME', anchor=CENTER, text='DATE_TIME')
 
@@ -662,7 +621,7 @@ def PlaceOrder():
                                         (%s,%s,%s,%s)', (NewOrderNumber, data[BEVERAGE[0]][0], TABLE_NUMBER, QUANTITY))
                 db.commit()
     CTkMessagebox.CTkMessagebox(title='RMS', message="Order Place Successfully", icon='check')
-
+    WAITER()
 
 def course():
     global list_of_APPETIZER
@@ -672,6 +631,7 @@ def course():
 
     TableNumberOptionMenu.place_forget()
     PlaceOrder_btn.place_forget()
+    Bill_btn.place_forget()
     LogOut_btn.place_forget()
 
     def itemincrement(index,course):
@@ -931,6 +891,81 @@ def course():
     except:
         pass
 
+def BillPaid(TOTAL):
+    ans = CTkMessagebox.CTkMessagebox(title='RMS', message='Payment of $ '+str(TOTAL)+' successful',
+                                      icon='check')
+    if ans.get() == 'OK':
+        BillWindow.destroy()
+
+
+def PayBills(TABLE_NUMBER):
+    global BillWindow
+    BillWindow = customtkinter.CTkToplevel()
+    BillWindow.after(250, lambda: BillWindow.iconbitmap('images/logo.ico'))
+    BillWindow.geometry('600x500')
+    MainLabel = customtkinter.CTkLabel(BillWindow, text="Main Label", font=customtkinter.CTkFont(size=40),
+                                       text_color='#2fa572')
+    submit_btn = customtkinter.CTkButton(BillWindow, text='SUBMIT', height=50,
+                                         font=customtkinter.CTkFont(size=15, weight='bold'))
+    list_of_items = list()
+    cursor.execute('select ITEM,QUANTITY,PRICE,PRICE*QUANTITY from ORDERS natural join menu where TABLE_NO=%s',
+                   (TABLE_NUMBER,))
+    for record in cursor:
+        list_of_items.append(record)
+    if list_of_items == []:
+        print('No orders')
+    else:
+        TotalAmount = 0
+        secondaryFrame = customtkinter.CTkScrollableFrame(BillWindow, width=574, fg_color='transparent', height=300)
+        secondaryFrame.grid(column=0, row=2, columnspan=3, pady=(20, 0))
+        for i in range(len(list_of_items)):
+            name = list_of_items[i][0]
+            name = name.split()
+            tempName = ''
+            for j in range(len(name)):
+                tempName += '_' + name[j]
+            name = tempName
+            try:
+                img = Image.open('images/{}.png'.format(name))
+                icon = customtkinter.CTkImage(dark_image=img, size=(50, 50))
+            except:
+                try:
+                    img = Image.open('images/{}.jpg'.format(name))
+                    icon = customtkinter.CTkImage(dark_image=img, size=(50, 50))
+                except:
+                    pass
+            name_label = customtkinter.CTkLabel(secondaryFrame, text=list_of_items[i][0], anchor='center')
+            img_label = customtkinter.CTkLabel(secondaryFrame, image=icon, text=None, compound='left')
+            quantity_label = customtkinter.CTkLabel(secondaryFrame, text=list_of_items[i][1], anchor='center')
+            price_label = customtkinter.CTkLabel(secondaryFrame, text='$ ' + str(list_of_items[i][2]), anchor='center')
+            amount_label = customtkinter.CTkLabel(secondaryFrame, text='$ ' + str(list_of_items[i][3]), anchor='center')
+
+            name_label.grid(column=1, row=i + 1, padx=(20, 0), pady=(10, 5))
+            img_label.grid(column=0, row=i + 1, padx=(20, 0), pady=(10, 5))
+            quantity_label.grid(column=3, row=i + 1, padx=(10, 10), pady=(10, 5))
+            price_label.grid(column=2, row=i + 1, padx=(10, 10), pady=(10, 5))
+            amount_label.grid(column=4, row=i + 1, padx=(0, 0), pady=(10, 5))
+            TotalAmount += list_of_items[i][2]
+        ItemLabel = customtkinter.CTkLabel(secondaryFrame, text='ITEM NAME', anchor='center', bg_color='#343638')
+        PriceLabel = customtkinter.CTkLabel(secondaryFrame, text='PRICE', anchor='center', bg_color='#343638')
+        QuantityLabel = customtkinter.CTkLabel(secondaryFrame, text='QUANTITY', anchor='center', bg_color='#343638')
+        AmountLabel = customtkinter.CTkLabel(secondaryFrame, text='AMOUNT', anchor='center', bg_color='#343638')
+        total_amount_Label = customtkinter.CTkLabel(BillWindow, text='TOTAL AMOUNT', anchor='center',
+                                                    font=customtkinter.CTkFont(size=25))
+        TotalAmount_Label = customtkinter.CTkLabel(BillWindow, text='$ ' + str(TotalAmount), anchor='center',
+                                                   font=customtkinter.CTkFont(family='roman', size=30))
+        submit_btn.configure(text='PAY', height=35, command=lambda: BillPaid(TotalAmount))
+        MainLabel.configure(text='PAYMENT')
+
+        MainLabel.grid(row=0, column=0, columnspan=3, pady=(20, 0))
+        ItemLabel.grid(row=0, column=0, columnspan=2, ipadx=95)
+        PriceLabel.grid(row=0, column=2, ipadx=20, padx=(10, 10))
+        QuantityLabel.grid(row=0, column=3, ipadx=10, padx=(10, 10))
+        AmountLabel.grid(row=0, column=4, ipadx=10, padx=(0, 0))
+        total_amount_Label.grid(row=3, column=0, pady=(0, 20), rowspan=2)
+        TotalAmount_Label.grid(row=3, column=2)
+        submit_btn.grid(row=4, column=2, pady=(20, 0))
+
 def TableSelected(TableNumber2):
     global TableNumber
     TableNumber = TableNumber2
@@ -952,13 +987,14 @@ def WAITER():
 
     LogOut_btn.configure(command=lambda: LogOut())
     PlaceOrder_btn.configure(command=lambda: course(), state=DISABLED)
-    Bill_btn.configure(state=DISABLED)
+    Bill_btn.configure(command=lambda: PayBills(TableNumberOptionMenu.get()), state=DISABLED)
     TableNumberOptionMenu.configure(command=TableSelected)
+    TableNumberOptionMenu.set('TABLE NUMBER')
 
     TableNumberOptionMenu.place(rely=0.2, relx=0.5, anchor='center')
-    PlaceOrder_btn.place(relx=0.3, rely=0.5)
-    Bill_btn.place(relx=0.7, rely=0.5)
-    LogOut_btn.place(relx=0.5, rely=0.5)
+    PlaceOrder_btn.place(relx=0.25, rely=0.5, anchor='center')
+    Bill_btn.place(relx=0.45, rely=0.5, anchor='center')
+    LogOut_btn.place(relx=0.65, rely=0.5, anchor='center')
 
 def MANAGER():
     frame.destroy()
@@ -1017,17 +1053,20 @@ def verify_id():
                     MANAGER()
             else:
                 print('\nIncorrect PASSWORD\nTry Again')
-                ans = messagebox.showwarning(title='Try Again', message="Incorrect PASSWORD")
-                a.bind('<Return>', lambda event: Emp_Update("ADD"))
+                ans = CTkMessagebox.CTkMessagebox(title='Try Again', message="Incorrect PASSWORD", icon='warning')
+                a.bind('<Return>', lambda event: verify_id())
             break
     else:
         CTkMessagebox.CTkMessagebox(title='Try Again', message="An user with this ID doesn't exist", icon="cancel")
-        a.bind('<Return>', lambda event: Emp_Update("ADD"))
+        a.bind('<Return>', lambda event: verify_id())
 
 def LoginIdMenu(ID):
-    Pass_Entry.configure(state=NORMAL, show='*')
+    Pass_Entry.configure(state=NORMAL)
+    Pass_Entry.delete(0, END)
+    Pass_Entry.configure(show='*')
+    Pass_Entry.icursor(0)
     submit_btn.configure(state=NORMAL)
-    Name_Entry.configure(placeholder_text='EMPLOYEE NAME')
+    Name_Entry.configure(placeholder_text='ENTER EMPLOYEE NAME')
 
 def login():
     Left_arrow_btn.place_forget()
@@ -1037,6 +1076,7 @@ def login():
     Order_history_btn.place_forget()
     TableNumberOptionMenu.place_forget()
     PlaceOrder_btn.place_forget()
+    Bill_btn.place_forget()
     #Id_Entry.delete(0, END)
     Pass_Entry.delete(0, END)
 
@@ -1077,9 +1117,9 @@ a.title('RESTAURANT MANAGEMENT SYSTEM')
 a.iconbitmap('images/logo.ico')
 #code to give size of the form
 a.geometry('1000x600')
-#a.minsize(900,600)
-#a.maxsize(1000,700)
-#a.resizable(0,0)
+#BillWindow.minsize(900,600)
+#BillWindow.maxsize(1000,700)
+#BillWindow.resizable(0,0)
 
 #DATABASE CONNECTION
 db = mysql.connector.connect(host='localhost', user='root', passwd='1234', auth_plugin='mysql_native_password')
