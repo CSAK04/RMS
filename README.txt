@@ -1,16 +1,12 @@
 cs project
-Restaurant management system
+Restaurant Management System
 
 Project Title: Restaurant Management System
 
 Project Synopsis:
 
 1. Introduction:
-The Restaurant Management System(RMS) project aims to streamline,optimize and 
-modernizethe operations of restaurants, improving efficiency, customer service, 
-and profitability. This system will provide a comprehensive solution for 
-managing various aspects of a restaurant, including order processing, 
-inventory management, employee scheduling, and customer engagement.
+The Restaurant Management System(RMS) project aims to streamline,optimize and modernizethe operations of restaurants, improving efficiency, customer service, and profitability. This system will provide a comprehensive solution for managing various aspects of a restaurant, including order processing, inventory management, employee scheduling, and customer engagement.
 
 We propose to build a software that can efficiently carry out various functions done in restaurant.It's working function is similar to work done in restaurant.This is an era of Digitalisation,It is very important to digitalize for business to survive.This project is developed proficiently to assist the restaurant management system.It helps to manage orders and much more
 
