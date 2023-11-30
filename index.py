@@ -494,7 +494,7 @@ def OrderHistory():
             e.grid(row=i + 1, column=j)
             e.insert(END, table[i][j])
             e.configure(state=DISABLED)'''
-    cursor.execute('SELECT ORDER_NO,TABLE_NO,ITEM,COURSE,VEG,QUANTITY,PRICE,DATE_TIME FROM ORDERS NATURAL JOIN MENU')
+    cursor.execute('SELECT ORDER_NO,TABLE_NO,ITEM,COURSE,VEG,QUANTITY,PRICE,DATE_TIME,STATE FROM ORDERHISTORY NATURAL JOIN MENU')
     data = list()
     for tuple in cursor:
         data.append(tuple)
@@ -503,16 +503,17 @@ def OrderHistory():
 
 
     tableView = ttk.Treeview(frame, style="Custom.Treeview", height=len(data))
-    tableView['columns'] = ('ORDER_NO', 'TABLE_NO', 'ITEM', 'COURSE', 'VEG', 'QUANTITY', 'PRICE', 'DATE_TIME')
+    tableView['columns'] = ('ORDER_NO', 'TABLE_NO', 'ITEM', 'COURSE', 'VEG', 'QUANTITY', 'PRICE', 'DATE_TIME', 'STATE')
     tableView.column('#0', width=0, stretch=NO)
-    tableView.column('ORDER_NO', anchor=CENTER, width=100)
-    tableView.column('TABLE_NO', anchor=CENTER, width=130)
+    tableView.column('ORDER_NO', anchor=CENTER, width=80)
+    tableView.column('TABLE_NO', anchor=CENTER, width=80)
     tableView.column('ITEM', anchor=CENTER, width=200)
-    tableView.column('COURSE', anchor=CENTER, width=130)
-    tableView.column('VEG', anchor=CENTER, width=90)
+    tableView.column('COURSE', anchor=CENTER, width=100)
+    tableView.column('VEG', anchor=CENTER, width=60)
     tableView.column('QUANTITY', anchor=CENTER, width=90)
-    tableView.column('PRICE', anchor=CENTER, width=130)
-    tableView.column('DATE_TIME', anchor=CENTER, width=130)
+    tableView.column('PRICE', anchor=CENTER, width=90)
+    tableView.column('DATE_TIME', anchor=CENTER, width=110)
+    tableView.column('STATE', anchor=CENTER, width=130)
 
     tableView.heading("#0", text="")
     tableView.heading('ORDER_NO', anchor=CENTER, text='ORDER_NO')
@@ -523,6 +524,7 @@ def OrderHistory():
     tableView.heading('QUANTITY', anchor=CENTER, text='QUANTITY')
     tableView.heading('PRICE', anchor=CENTER, text='PRICE')
     tableView.heading('DATE_TIME', anchor=CENTER, text='DATE_TIME')
+    tableView.heading('STATE', anchor=CENTER, text='STATE')
 
     for i in range(len(data)):
         tableView.insert(parent='', index='end', iid=i, text='', values=data[i])
@@ -989,6 +991,7 @@ def WAITER():
     MainLabel.place_forget()
     Left_arrow_btn.place_forget()
 
+    a.geometry('1000x600')
     LogOut_btn.configure(command=lambda: LogOut())
     PlaceOrder_btn.configure(command=lambda: course(), state=DISABLED)
     Bill_btn.configure(command=lambda: PayBills(TableNumberOptionMenu.get()), state=DISABLED)
@@ -1285,6 +1288,7 @@ st.map("Custom.Treeview.Heading", relief=[('active', 'groove'), ('pressed', 'fla
 # 343638
 # 979DA2
 
-login()
+#login()
+OrderHistory()
 a.protocol("WM_DELETE_WINDOW", QUIT)
 a.mainloop()
