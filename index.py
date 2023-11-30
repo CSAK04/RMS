@@ -1288,7 +1288,6 @@ st.map("Custom.Treeview.Heading", relief=[('active', 'groove'), ('pressed', 'fla
 # 343638
 # 979DA2
 
-#login()
-OrderHistory()
+login()
 a.protocol("WM_DELETE_WINDOW", QUIT)
 a.mainloop()
